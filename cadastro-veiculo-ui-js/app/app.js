@@ -1,21 +1,22 @@
 'use strict';
 
 // Declare app level module which depends on views, and components
-angular.module('myApp', [
+var app = angular.module('app', [
   'ngRoute',
-  'myApp.version'
-]).
-config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
+  'app.version'
+])
+
+.config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
   $locationProvider.hashPrefix('!');
 
   $routeProvider.when('/', {
     templateUrl: '/partials/initial.html',
-    controller: 'MenuCtrl'
+    controller: ''
   });
 
     $routeProvider.when('/cadastro', {
       templateUrl: '../partials/cadastro/view2.html',
-      controller: 'MenuCtrl'
+      controller: ''
     });
 
    
@@ -26,15 +27,64 @@ config(['$locationProvider', '$routeProvider', function($locationProvider, $rout
 
       $routeProvider.otherwise({redirectTo: '/'});
       
-    }])
+    }]);
 
-    
-    myApp.constant("CONSTANTS", {
-  getUserByIdUrl: "/veiculos/{id}",
-  getAllUsers: "/user/getAllUsers",
-  saveUser: "/user/saveUser"
-});
+  
+
+    app.controller('ListCtrl', ['$scope','listService', 
+  function ($scope, listService) {
+
+      $scope.getUser = function () {
+          var id = $scope.user.id;
+          listService.getUser($scope.user.id)
+            .then(function success(response) {
+                $scope.user = response.data;
+                $scope.user.id = id;
+                $scope.message='';
+                $scope.errorMessage = '';
+            },
+            function error (response) {
+                $scope.message = '';
+                if (response.status === 404){
+                    $scope.errorMessage = 'User not found!';
+                }
+                else {
+                    $scope.errorMessage = "Error getting user!";
+                }
+            });
+      };
 
 
+$scope.getAllUsers = function () {
+    listService.getAllUsers()
+      .then(function success(response) {
+          $scope.users = response.data._embedded.users;
+          $scope.message='';
+          $scope.errorMessage = '';
+      },
+      function error (response) {
+          $scope.message='';
+          $scope.errorMessage = 'Error getting users!';
+      });
+}
+}]);
+  
+app.service('listService', [ '$http', function($http) {
  
+  this.getUser = function getUser(userId) {
+      return $http({
+          method : 'GET',
+          url : 'http://localhost:8080/veiculos/' + userId
+      });
+  }
+
+
+this.getAllUsers = function getAllUsers() {
+  return $http({
+      method : 'GET',
+      url : 'http://localhost:8080/veiculos'
+  });
+}
+
+} ]);
 

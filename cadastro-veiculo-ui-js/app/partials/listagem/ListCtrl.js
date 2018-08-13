@@ -1,47 +1,35 @@
-'use strict'
-var module = angular.module('demo.controllers', []);
-module.controller("ListController", ["$scope", "ListService",
-    function($scope, ListService) {
-        $scope.userDto = {
-            userId: null,
-            userName: null,
-            skillDtos: []
-        };
-        $scope.skills = [];
-        ListService.getUserById(1).then(function(value) {
-            console.log(value.data);
-        }, function(reason) {
-            console.log("error occured");
-        }, function(value) {
-            console.log("no callback");
-        });
-        $scope.saveUser = function() {
-            $scope.userDto.skillDtos = $scope.skills.map(skill => {
-                return {
-                    skillId: null,
-                    skillName: skill
-                };
+app.controller('ListCtrl', ['$scope','ListService', 
+  function ($scope,ListService) {
+      $scope.getUser = function () {
+          var id = $scope.user.id;
+          ListService.getUser($scope.user.id)
+            .then(function success(response) {
+                $scope.user = response.data;
+                $scope.user.id = id;
+                $scope.message='';
+                $scope.errorMessage = '';
+            },
+            function error (response) {
+                $scope.message = '';
+                if (response.status === 404){
+                    $scope.errorMessage = 'User not found!';
+                }
+                else {
+                    $scope.errorMessage = "Error getting user!";
+                }
             });
-            ListService.saveUser($scope.userDto).then(function() {
-                console.log("works");
-                UserService.getAllUsers().then(function(value) {
-                    $scope.allUsers = value.data;
-                }, function(reason) {
-                    console.log("error occured");
-                }, function(value) {
-                    console.log("no callback");
-                });
-                $scope.skills = [];
-                $scope.userDto = {
-                    userId: null,
-                    userName: null,
-                    skillDtos: []
-                };
-            }, function(reason) {
-                console.log("error occured");
-            }, function(value) {
-                console.log("no callback");
-            });
-        }
-    }
-]);
+      };
+}]);
+
+$scope.getAllUsers = function () {
+    ListService.getAllUsers()
+      .then(function success(response) {
+          $scope.users = response.data._embedded.users;
+          $scope.message='';
+          $scope.errorMessage = '';
+      },
+      function error (response) {
+          $scope.message='';
+          $scope.errorMessage = 'Error getting users!';
+      });
+}
