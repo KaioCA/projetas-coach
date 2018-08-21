@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html lang="en" ng-app="app" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html lang="en" ng-app="app" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="en" ng-app="app" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" ng-app="crud" class="no-js"> <!--<![endif]-->
+<!--[if lt IE 7]>      <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -23,176 +23,44 @@
   crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
   crossorigin="anonymous"></script> 
-  <script src="angular/angular.min.js"></script>
-  <script src="angular/app.js"></script>
 </head>
-<body ng-controller="controller" >
-  <hr>
-  <div class='titulo col-sm-offset-4 col-sm-4' >
-      <h2 style="align-items: center"> Listagem de Clientes </h2>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+       
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="#!/listagem">Listagem de Veículos <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href=#!/cadastro>Cadastro</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+  
   </div>
-  <div class='col-sm-4' style="align-content: right">
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Novo</button>
-  </div>
-  <hr>
-  <div class='index col-sm-offset-1 col-sm-9'>
-      <table class="table table-hover" style="align-content: center">
-          <thead>
-          <tr>
-              <th style="border: 0px;">Nome</th>
-              <th style="border: 0px;">Telefone</th>
-              <th style="border: 0px;">E-mail</th>
-          </tr>
-          </thead>
-  
-          <tbody>
-          <tr ng-repeat="cliente in clientes">
-              <td>{{cliente.nome}}</td>
-              <td>{{cliente.telefone}}</td>
-              <td>{{cliente.email}}</td>
-              <td>
-                  <button type="button" class="btn btn-warning" data-toggle="modal"
-                          data-target="#myModalEditar" ng-click="selecionaCliente(cliente)">Editar</button>
-              </td>
-              <td>
-                  <button type="button" class="btn btn-danger" data-toggle="modal"
-                          data-target="#myModalExcluir" ng-click="selecionaCliente(cliente)">Excluir</button>
-              </td>
-          </tr>
-          </tbody>
-      </table>
-  </div>
-  
-  
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-      <div class="modal-dialog">
-  
-          <!-- Modal content-->
-          <div class="modal-content">
-              <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title">Novo Cadastro</h4>
-              </div>
-              <div class="modal-body">
-                  <form class="form-horizontal" role="form">
-                      <div class="form-group">
-                          <label class="control-label col-sm-2">Nome</label>
-                          <div class="col-sm-10">
-                              <input type="text" class="form-control" placeholder="Nome..."
-                              ng-model="novoCliente.nome">
-                          </div>
-                      </div>
-  
-                      <div class="form-group">
-                          <label class="control-label col-sm-2">Telefone</label>
-                          <div class="col-sm-10">
-                              <input type="tel" class="form-control" placeholder="Telefone..."
-                                     ng-model="novoCliente.telefone">
-                          </div>
-                      </div>
-  
-                      <div class="form-group">
-                          <label class="control-label col-sm-2">E-mail</label>
-                          <div class="col-sm-10">
-                              <input type="email" class="form-control" placeholder="E-mail..."
-                                     ng-model="novoCliente.email">
-                          </div>
-                      </div>
-  
-                      <div class="form-group">
-                          <div class="col-sm-offset-2 col-sm-10">
-                              <button type="submit" class="btn btn-primary"
-                              ng-click="salvar()" data-dismiss="modal">Salvar</button>
-                          </div>
-                      </div>
-                  </form>
-              </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-              </div>
-          </div>
-  
-      </div>
-  </div>
-  
-  
-  <!-- Modal -->
-  <div class="modal fade" id="myModalEditar" role="dialog">
-      <div class="modal-dialog">
-  
-          <!-- Modal content-->
-          <div class="modal-content">
-              <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title">Editar Cadastro</h4>
-              </div>
-              <div class="modal-body">
-                  <form class="form-horizontal" role="form">
-                      <div class="form-group">
-                          <label class="control-label col-sm-2">Nome</label>
-                          <div class="col-sm-10">
-                              <input type="text" class="form-control" placeholder="Nome..."
-                              ng-model="clienteSelecionado.nome">
-                          </div>
-                      </div>
-  
-                      <div class="form-group">
-                          <label class="control-label col-sm-2">Telefone</label>
-                          <div class="col-sm-10">
-                              <input type="tel" class="form-control" placeholder="Telefone..."
-                                     ng-model="clienteSelecionado.telefone">
-                          </div>
-                      </div>
-  
-                      <div class="form-group">
-                          <label class="control-label col-sm-2">E-mail</label>
-                          <div class="col-sm-10">
-                              <input type="email" class="form-control" placeholder="E-mail..."
-                                     ng-model="clienteSelecionado.email">
-                          </div>
-                      </div>
-  
-                      <div class="form-group">
-                          <div class="col-sm-offset-2 col-sm-10">
-                              <button type="submit" class="btn btn-primary"
-                              ng-click="alterarCliente()" data-dismiss="modal">Salvar</button>
-                          </div>
-                      </div>
-                  </form>
-              </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-              </div>
-          </div>
-  
-      </div>
-  </div>
-  
-  
-  <!-- Modal -->
-  <div class="modal fade" id="myModalExcluir" role="dialog">
-      <div class="modal-dialog">
-  
-          <!-- Modal content-->
-          <div class="modal-content">
-              <div class="modal-header">
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                  <h4 class="modal-title">Você tem certeza?</h4>
-              </div>
-              <div class="modal-body">
-                  <h4 style="font-weight: bolder"> Você vai excluir o Cadastro de {{clienteSelecionado.nome}}</h4>
-              </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-default" data-dismiss="modal"
-                  ng-click="excluirCliente()" data-dismiss="modal">Sim</button>
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
-              </div>
-          </div>
-  
-      </div>
-  </div>
-  
-  
-  </body>
+
+  <!--[if lt IE 7]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
+
+  <div ng-view></div>
+
+ 
+
+  <!-- In production use:
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+  -->
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-route/angular-route.js"></script>
+  <script src="app.js"></script>
+  <script src="partials/listagem/ListCtrl.js"></script>
+  <script src="partials/cadastro/CadastroCtrl.js"></script>
+  <script src="view1/view1.js"></script>
+  <script src="view2/view2.js"></script>
+  <script src="components/version/version.js"></script>
+  <script src="components/version/version-directive.js"></script>
+  <script src="components/version/interpolate-filter.js"></script>
+</body>
 </html>

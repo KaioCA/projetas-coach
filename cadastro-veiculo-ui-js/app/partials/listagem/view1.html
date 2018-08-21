@@ -1,10 +1,12 @@
-<div ng-controller="ListCtrl">
+<div >
   <div class="panel panel-default">
     <!-- Default panel contents -->
-    <div class="panel-heading"><span class="lead">List of Users </span></div>
-    <div class="panel-body">
-        <div class="table-responsive">
-            <table class="table table-hover">
+    <div class="panel-heading"><span class="lead">Lista de Veículos </span></div>
+    <div class="panel-body" >
+        <div class="table-responsive" ng-controller="getcontroller">
+                <button id="btn-id" type="button" class="btn btn-primary" ng-click="getfunction()">Listar Veículos</button>
+                <ul>
+            <table  class="table table-hover">
                 <thead>
                 <tr>
                     <th>ID</th>
@@ -13,14 +15,15 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat="u in getAllUsers">
+                <tr ng-repeat="u in response">
                     <td>{{u.id}}</td>
                     <td>{{u.marca}}</td>
                    
                    
                 </tr>
                 </tbody>
-            </table>      
+            </table>   
+            </ul>   
         </div>
     </div>
 </div>
