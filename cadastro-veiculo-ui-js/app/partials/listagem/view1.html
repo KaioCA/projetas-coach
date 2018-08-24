@@ -5,7 +5,25 @@
     
     <div class="panel-body" >
         <div class="table-responsive" ng-controller="getcontroller">
-                <button id="btn-id" type="button" class="btn btn-primary" ng-click="getfunction()">Listar Veículos</button>
+
+                <form class="form-horizontal" ng-show="userid" name="customerForm" ng-submit="updateUser()">
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="id">Id:</label>
+                            <div class="col-sm-5">
+                              <input ng-model="user.id" type="text" class="form-control" 
+                                placeholder="Digite o Id"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="marca">Marca:</label>
+                            <div class="col-sm-5">
+                              <input ng-model="user.marca" type="text" class="form-control"
+                                placeholder="Digite a marca"/>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
+                      </form>
+        <br>
                 <ul>
             <table   class="table table-hover">
                 <thead>
@@ -27,6 +45,7 @@
                 </tr>
                 </tbody>
             </table>   
+           
             <div ng-if="restMessage!==undefined">
                 <div class="alert alert-info alert-dismissable"  ng-if="!error">
                     <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
