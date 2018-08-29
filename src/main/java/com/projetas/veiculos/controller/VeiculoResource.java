@@ -1,7 +1,8 @@
 package com.projetas.veiculos.controller;
 
-import com.projetas.veiculos.Repository.VeiculoRepository;
+import com.projetas.veiculos.repository.VeiculoRepository;
 import com.projetas.veiculos.model.Veiculo;
+import com.projetas.veiculos.service.VeiculoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -14,9 +15,13 @@ public class VeiculoResource {
 
     VeiculoRepository veiculoRepository;
 
+    VeiculoService veiculoService;
+
+
+
     @Autowired
-    public VeiculoResource(VeiculoRepository veiculoRepository){
-        this.veiculoRepository = veiculoRepository;
+    public VeiculoResource(VeiculoService veiculoService){
+        this.veiculoService = veiculoService;
     }
 
     @GetMapping("/{id}")
@@ -25,13 +30,13 @@ public class VeiculoResource {
     }
 
     @GetMapping
-    public List<Veiculo> pesquisar() {
-        return veiculoRepository.findAll();
+    public List<Veiculo> searchVeiculo() {
+        return veiculoService.searchVeiculo();
     }
 
     @PostMapping()
-    public Veiculo salvar(@RequestBody Veiculo veiculo) {
-        return veiculoRepository.save(veiculo);
+    public Veiculo saveVeiculo(@RequestBody Veiculo veiculo) {
+        return veiculoService.save(veiculo);
     }
 
     @DeleteMapping("/{id}")
